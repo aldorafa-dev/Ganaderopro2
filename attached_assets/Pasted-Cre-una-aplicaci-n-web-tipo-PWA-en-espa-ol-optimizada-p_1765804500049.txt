@@ -1,0 +1,196 @@
+Creá una aplicación web tipo PWA, en español, optimizada para celular y computadora,
+pensada para uso intensivo en el campo y funcionando completamente offline.
+
+OBJETIVO GENERAL:
+Sistema integral de gestión ganadera con:
+- Establecimientos / campos
+- Lotes
+- Rodeos
+- Animales
+- Reproducción (IATF y servicio natural)
+- Partos, hijos, alertas
+- Estadísticas productivas
+- RFID
+- Mapa del campo
+- Backup y APK Android
+
+================================================
+TECNOLOGÍA
+================================================
+- Frontend en React
+- Aplicación PWA instalable (Android)
+- IndexedDB como base local
+- Arquitectura offline-first
+- Preparada para sincronización en la nube
+- Preparada para exportar a APK Android (Capacitor)
+- Integración futura con Bluetooth (RFID)
+
+================================================
+ESTRUCTURA DE DATOS
+================================================
+
+ESTABLECIMIENTO:
+- id
+- nombre
+- ubicación
+- coordenadasGPS
+- observaciones
+
+LOTE:
+- id
+- nombre
+- establecimientoId
+- superficie
+- coordenadasPoligono (para mapa)
+- observaciones
+
+RODEO:
+- id
+- nombre
+- establecimientoId
+- loteId
+- observaciones
+
+ANIMAL:
+- id (caravana, único)
+- establecimientoId
+- loteId
+- rodeoId
+- categoria (ternero, novillo, vaquillona, vaca, toro)
+- sexo
+- colorRaza
+- fechaNacimiento
+- tratamientos[] (fecha, tipo, observaciones)
+- hijoDe:
+    - madre (caravana)
+    - padre (caravana)
+- observaciones
+- fechaAlta
+
+EVENTOS REPRODUCTIVOS (VACAS):
+- tipoEvento: IATF | Servicio Natural
+- fechaEvento
+- toroOSemen
+- observaciones
+
+PARTOS:
+- fechaParto
+- cria (caravana)
+- origen: IATF | Servicio Natural | Indeterminado
+- toroOSemen
+
+================================================
+ORGANIZACIÓN DEL SISTEMA
+================================================
+- Un establecimiento tiene múltiples lotes
+- Cada lote tiene uno o más rodeos
+- Cada animal pertenece a un establecimiento, lote y rodeo
+- Permitir mover animales entre lotes y rodeos (con historial)
+
+================================================
+REPRODUCCIÓN – LÓGICA AUTOMÁTICA
+================================================
+
+GESTACIÓN:
+- Promedio bovino: 283 días
+- Tolerancia configurable ±10 días
+
+DETERMINACIÓN AUTOMÁTICA:
+- Al registrar nacimiento:
+    - Buscar último evento reproductivo de la madre
+    - Calcular días entre evento y parto
+    - Asignar origen automáticamente:
+        - IATF
+        - Servicio Natural
+        - Indeterminado
+
+VACAS:
+- Mostrar sección "Reproducción"
+- Historial de servicios
+- Historial de partos
+- Listado automático de hijos con:
+    - Caravana
+    - Sexo
+    - Categoría
+    - Fecha nacimiento
+    - Origen (IATF / Natural)
+
+TOROS:
+- Total de crías
+- Crías por IATF y natural
+- Vacas cubiertas
+- Ranking reproductivo
+
+================================================
+ALERTAS INTELIGENTES
+================================================
+
+- Parto próximo (desde día 270)
+- Repetición de celo (21–24 días sin parto)
+- Control post-parto
+- Alertas filtrables por:
+    - Establecimiento
+    - Lote
+    - Rodeo
+
+================================================
+MAPA DEL CAMPO
+================================================
+
+- Vista mapa del establecimiento
+- Mostrar lotes como polígonos
+- Asociar animales y rodeos a cada lote
+- Filtro visual por categoría y rodeo
+- Uso offline del mapa (datos guardados localmente)
+
+================================================
+ESTADÍSTICAS AVANZADAS
+================================================
+
+- Animales por campo / lote / rodeo
+- Vacas servidas vs paridas
+- % preñez IATF
+- % preñez servicio natural
+- Comparación IATF vs natural
+- Promedio de hijos por vaca
+- Eficiencia reproductiva por lote
+- Ranking de toros y semen
+- Días promedio de gestación
+
+================================================
+RFID (PREPARADO PARA USO REAL)
+================================================
+
+- Campo caravana compatible RFID
+- Entrada manual inicial
+- Preparar integración Bluetooth para:
+    - Datamars
+    - Allflex
+- Modo lectura rápida de animales
+
+================================================
+BACKUP Y EXPORTACIÓN
+================================================
+
+- Backup manual y automático
+- Exportar / importar base completa
+- Exportar a Excel (CSV)
+- Preparado para sincronización nube futura
+
+================================================
+APK ANDROID
+================================================
+
+- Preparada para empaquetar como APK
+- Instalación directa en celular
+- Uso sin internet
+
+================================================
+DISEÑO
+================================================
+
+- Colores verde y blanco
+- Botones grandes
+- Texto legible a pleno sol
+- Navegación por pestañas
+- Uso con una sola mano
